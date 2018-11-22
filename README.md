@@ -4,13 +4,9 @@
 This section helps you get started with setting up this constituent in eclipse
 
 - Clone repository on to your machine as
-```shell
-git clone git@repo.haystack.one:server.tachyon/constituent.shell.git
-```
+    - `git clone git@repo.haystack.one:server.tachyon/constituent.shell.git`
 - Move to directory, and add plugins.sbt as,
-```shell
-vi project/plugins.sbt
-```
+    - `vi project/plugins.sbt`
 - Add eclipse plugin line and close.
     - `addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.4")`
 - Issue `sbt eclipse` and wait for creation of project.
@@ -26,12 +22,15 @@ You will have to import following storage classes to your project. These JARs ca
 
 You may hit Scala version compatibility issues. If so, go to project compiler settings and choose _Latest 2.11 bundle (dynamic)_
 
+Finally, edit `build.sbt` and add the following under `libraryDependencies`
 
+- `"org.xerial.snappy" % "snappy-java" % "1.1.1.7"`
+- Add this for debugging only. Do not commit it.
 
 ### Build configurations
 Helps us train and deploy locally.
 
-######Simulating `pio train`
+#####Simulating `pio train`
 Create a new _Run/Debug Configuration_ by going to _Debug > Edit Configurations...._ Choose _Scala Application_ and click on the + button. Name it pio train and put in the following:
 
 - Main class:
