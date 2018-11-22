@@ -30,7 +30,7 @@ Finally, edit `build.sbt` and add the following under `libraryDependencies`
 ### Build configurations
 Helps us train and deploy locally.
 
-#####Simulating `pio train`
+##### Simulating `pio train`
 Create a new _Run/Debug Configuration_ by going to _Debug > Edit Configurations...._ Choose _Scala Application_ and click on the + button. Name it pio train and put in the following:
 
 - Main class:
