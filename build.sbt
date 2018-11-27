@@ -1,4 +1,4 @@
-name := "template-scala-parallel-vanilla"
+name := "constituent.shell"
 
 scalaVersion := "2.11.8"
 libraryDependencies ++= Seq(

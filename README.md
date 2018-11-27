@@ -36,11 +36,30 @@ Create a new _Run/Debug Configuration_ by going to _Debug > Edit Configurations.
 - Main class:
     - `org.apache.predictionio.workflow.CreateWorkflow`
 - VM options:
-    - `-Dspark.master=local -Dlog4j.configuration=file:/<your_pio_path>/conf/log4j.properties -Dpio.log.dir=<path_of_log_file>`
+    - `-Dspark.master=local -Dlog4j.configuration=file:/usr/local/pio/conf/log4j.properties -Dpio.log.dir=/var/log/haystack/pio`
 - Program arguments:
     - `--engine-id dummy --engine-version dummy --engine-variant engine.json --env dummy=dummy`
 
 Make sure working directory is set to the base directory of the template that you are working on.
+
+Add environment variables to this configuration as indicated under deployment document; you may find it at `/usr/local/pio/conf/pio-env.sh`. Other considerations are as outlined below;
+
+- You might encounter issues with HDFS if configuration is not set right; if so switch to file system for model storage like so;
+    - `PIO_STORAGE_REPOSITORIES_MODELDATA_SOURCE: LOCALFS`
+    - `PIO_STORAGE_SOURCES_LOCALFS_TYPE: localfs`
+    - `PIO_STORAGE_SOURCES_LOCALFS_PATH: /path/to/data/folder`
+- You might have to also do the following for smoother provisioning;
+    - Copy `/usr/local/pio/conf/` to `jars` folder (the one where you brought in all the libraries from)
+    - Add this folder as an _external class path_ for the project
+
+##### Simulating `pio deploy`
+Simply duplicate the previous configuration and replace the following;
+
+- Main class:
+    - `org.apache.predictionio.workflow.CreateServer`
+- Program arguments:
+    - `--engineInstanceId <id_from_pio_train> --engine-variant engine.json`
+    - You will find `engineInstanceId` printed in console at the end of _train_
 
 ### Deployment
 
