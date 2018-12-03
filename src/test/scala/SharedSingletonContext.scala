@@ -1,4 +1,4 @@
-package org.example.vanilla
+package com.hs.haystack.tachyon.constituent.shell
 
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfterAll, Suite}

@@ -1,4 +1,4 @@
-package org.example.vanilla
+package com.hs.haystack.tachyon.constituent.shell
 
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers

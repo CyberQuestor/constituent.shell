@@ -1,4 +1,4 @@
-package org.example.vanilla
+package com.hs.haystack.tachyon.constituent.shell
 
 import org.apache.predictionio.controller.PDataSource
 import org.apache.predictionio.controller.EmptyEvaluationInfo

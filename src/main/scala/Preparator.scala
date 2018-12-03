@@ -1,4 +1,4 @@
-package org.example.vanilla
+package com.hs.haystack.tachyon.constituent.shell
 
 import org.apache.predictionio.controller.PPreparator
 import org.apache.predictionio.data.storage.Event
