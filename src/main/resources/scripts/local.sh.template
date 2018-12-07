@@ -7,12 +7,12 @@
 ##################################
 # Settings common to all variants
 ##################################
-PIO_HOME= #/path/to/PredictionIO
-LOG_DIR= #/path/to/log_dir
+PIO_HOME=/usr/local/pio #/path/to/PredictionIO
+LOG_DIR=/var/log/haystack/pio #/path/to/log_dir
 
 # Email for the log file/error message
-FROM_EMAIL= #
-TARGET_EMAIL= #
+FROM_EMAIL="info@haystack.one"
+TARGET_EMAIL="masterhank05@gmail.com"
 
 # Change the default binding IP if neeeded
 IP=0.0.0.0

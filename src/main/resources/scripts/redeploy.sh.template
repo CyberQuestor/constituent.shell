@@ -1,21 +1,8 @@
 #!/bin/bash
 
-#
-# Licensed to the Apache Software Foundation (ASF) under one or more
-# contributor license agreements.  See the NOTICE file distributed with
-# this work for additional information regarding copyright ownership.
-# The ASF licenses this file to You under the Apache License, Version 2.0
-# (the "License"); you may not use this file except in compliance with
-# the License.  You may obtain a copy of the License at
-#
-#    http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+##########################
+# Rename this to Constituent.shell_redeployment_(dev).sh
+##########################
 
 #set -x
 
@@ -38,7 +25,7 @@ TIMESTAMP=`date +"%Y%m%d-%H%M%S"`
 LOG_FILE="${LOG_DIR}/${filename}-${TIMESTAMP}.log"
 
 # For accessing the engine server status page
-HOSTNAME= #
+HOSTNAME=localhost
 
 # A port other than the default 8000 is recommend since it can be shut down
 # upon the command "pio deploy" without the "--port" parameter by mistake
@@ -48,7 +35,7 @@ PORT= # 8001
 # abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ12
 ACCESSKEY=
 
-ENGINE_JSON= # enginex_algo_dev.json, enginey_null_prod.json
+ENGINE_JSON=engine.json # enginex_algo_dev.json, enginey_null_prod.json
 
 # Use empty string if you want a local cluster for train, i.e. TRAIN_MASTER=
 TRAIN_MASTER="spark://`hostname`:7077"
@@ -58,13 +45,13 @@ TRAIN_MASTER="spark://`hostname`:7077"
 DEPLOY_MASTER=
 
 # Bump these up as needed
-TRAIN_EXECUTOR_MEMORY=16G
-TRAIN_DRIVER_MEMORY=8G
-TRAIN_CORES=4
-# 
-DEPLOY_EXECUTOR_MEMORY=16G
-DEPLOY_DRIVER_MEMORY=8G
-DEPLOY_CORES=4
+TRAIN_EXECUTOR_MEMORY=2G
+TRAIN_DRIVER_MEMORY=1G
+TRAIN_CORES=2
+#
+DEPLOY_EXECUTOR_MEMORY=2G
+DEPLOY_DRIVER_MEMORY=1G
+DEPLOY_CORES=2
 
 ###############################################################################
 # End of configuration
@@ -73,7 +60,7 @@ DEPLOY_CORES=4
 
 ###############
 # Sanity check
-############### 
+###############
 
 NAME=${filename//_/ } # Title of the email
 
@@ -89,19 +76,19 @@ check_non_empty "$ENGINE_JSON" "ENGINE_JSON"
 # Start of script
 ##################
 
-if [[ "$TRAIN_MASTER" == "" ]]; then 
+if [[ "$TRAIN_MASTER" == "" ]]; then
   TRAIN_MASTER_PARAM=
 else
   TRAIN_MASTER_PARAM="--master $TRAIN_MASTER"
 fi
 
-TRAIN_COMMAND="${PIO_HOME}/bin/pio train --verbose -v $ENGINE_JSON 
-    -- $TRAIN_MASTER_PARAM 
-    --executor-memory $TRAIN_EXECUTOR_MEMORY 
-    --driver-memory $TRAIN_DRIVER_MEMORY 
+TRAIN_COMMAND="${PIO_HOME}/bin/pio train --verbose -v $ENGINE_JSON
+    -- $TRAIN_MASTER_PARAM
+    --executor-memory $TRAIN_EXECUTOR_MEMORY
+    --driver-memory $TRAIN_DRIVER_MEMORY
     --total-executor-cores $TRAIN_CORES"
 
-if [[ "$DEPLOY_MASTER" == "" ]]; then 
+if [[ "$DEPLOY_MASTER" == "" ]]; then
   DEPLOY_MASTER_PARAM=
 else
   DEPLOY_MASTER_PARAM="--master $DEPLOY_MASTER"
