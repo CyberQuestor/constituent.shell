@@ -125,6 +125,12 @@ Now that we have successfully provisioned this HMLP; let us set it up for a peri
         - `ACCESSKEY=` - fill this with what was generated earlier
         - `TRAIN_MASTER="spark://monad-dev-vm3:7077"`
         - `DEPLOY_MASTER="spark://monad-dev-vm3:7077"`
+    - Time to copy these files to source scripts directory;
+        - `cd ../../../../`
+        - `mkdir scripts`
+        - `cp src/main/resources/scripts/*.sh scripts/`
+    - Do not forget to make it executable;
+        - `chmod +x Constituent.shell_redeployment_dev.sh `
     - Adjust spark driver and executor settings as required
     - Ensure `pio build` is run at least once before enabling this script.
 
@@ -133,11 +139,12 @@ Finally, setup crontab for executing these scripts. `mailutils` is used in this 
 - Edit crontab file as;
     - `crontab -e` for user level
     - Add the entry as;
-        - `0 0,6,12,18 * * * /var/lib/haystack/pio/constituents/constituent.shell/src/main/resources/scripts/Constituent.shell_redeployment_dev.sh >/dev/null 2>/dev/null`
+        - `0 0,6,12,18 * * * /var/lib/haystack/pio/constituents/constituent.shell/scripts/Constituent.shell_redeployment_dev.sh >/dev/null 2>/dev/null`
         - User `man cron` to check usage
         - Manage schedules in conjunction with all other HMLPs and ensure that trains do not overlap
-    - Restart service to take effect
-        - `sudo systemctl restart cron`
+    - Reload to take effect
+        - `sudo service cron reload`
+        - Restart if needed; `sudo systemctl restart cron`
 
 You are all set!
 
