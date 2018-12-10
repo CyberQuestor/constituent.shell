@@ -62,27 +62,112 @@ Simply duplicate the previous configuration and replace the following;
     - You will find `engineInstanceId` printed in console at the end of _train_
 
 ### Deployment
+This section provides you details on how to provision HMLP on to HOLU. Refer to individual constituents git page for proposed port mappings and access keys. Do not forget to add access to event server as;
+
+- Edit `/etc/defaults/haystack` and add base paths for event server at both announcer and consumer nodes.
+    - `holu.base=http://192.168.136.90:7070`
+
+##### Setup event pipeline
+The first element is to generate access tokens denoted as prediction pipeline units.
+
+- Execute the following to generate skeleton unit
+    - `pio app new constituent.shell`
+    - Add `--access-key` parameter if you want to control key generated
+        - It should be a 64-char string of the form `abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ12`
+- Record unit ID and access key. You will need this later.
+
+##### Prepare constituent
+It is time to prepare constituent unit files that eventually manifests as a HML pipeline.
+
+- Retrieve engine files by cloning relevant git repository
+    - `cd /var/lib/haystack/pio/constituents/`
+    -  `git clone git@repo.haystack.one:server.tachyon/constituent.shell.git constituent.shell`
+    - `cd constituent.shell`
+- Change `appName` at `engine.json` to `constituent.shell`
+- Edit `/etc/defaults/haystack` and add access keys to denote addition of HMLP.
+    - For consumer nodes;
+        - `haystack.tachyon.events.dispatch.skeleton=<accesskey>`
+- Complete events import through migration and turning on concomitant consumer
+
+##### Initiate first time training and deploy
+It is important to complete at least one iteration of build, train and deploy cycle prior to consumption.
+
+- Build the prediction unit as,
+    - `pio build --verbose`
+- Train the predictive model as (ensure events migration is complete),
+    - `pio train --executor-memory 2G --driver-memory 1G --total-executor-cores 2`
+- Deploy the prediction unit as,
+    - `nohup pio deploy --port 17071 --ip 192.168.136.90 --executor-memory 2G --driver-memory 1G --total-executor-cores 2 > /var/log/haystack/pio/deploy/17071 &`
+    - Do not kill the deployed process. Subsequent train and deploy would take care of provisioning it again.
+    - You can verify deployed HMLP by visiting `http://192.168.136.90:17071/` and querying at `http://192.168.136.90:17071/queries.json `
+- Edit `/etc/defaults/haystack` and add url keys to denote addition of HMLP.
+- For announcer nodes;
+    - `haystack.tachyon.pipeline.access.skeleton=http://192.168.136.90:17071`
+
+##### Setup consecutive training and deploy
+Now that we have successfully provisioned this HMLP; let us set it up for a periodic train-deploy cycle. Note that events are always consumed at real-time but are not accounted for until the next train cycle builds the model.
+
+- Find the accompanying shell scripts of constituent and modify for consumption.
+    - `cd /var/lib/haystack/pio/constituents/constituent.shell/src/main/resources/scripts/`
+    - Rename `local.sh.template` to `local.sh`
+    - Edit `local.sh` and set the following values;
+        - `PIO_HOME=/usr/local/pio`
+        - `LOG_DIR=/var/log/haystack/pio/cumulative` (ensure that the path exists)
+        - `FROM_EMAIL="info@haystack.one"` (emails are for internal notifications only)
+        - `TARGET_EMAIL="masterhank05@gmail.com"` (set this to our support/ customer care email or create a notifications id)
+        - `IP=192.168.136.90` - denotes HMLP for queries
+    - Rename `redeploy.sh.template` to `redeploy.sh`
+    - Edit `redeploy.sh` and set the following values;
+        - `HOSTNAME=192.168.136.90` (for accessing event server)
+        - `PORT=170071` - denotes HMLP port for queries
+        - `ACCESSKEY=` - fill this with what was generated earlier
+    - Adjust spark driver and executor settings as required
+    - Ensure `pio build` is run at least once before enabling this script.
+
+Finally, setup crontab for executing these scripts. `mailutils` is used in this script. For Ubuntu, you can do `sudo update-alternatives --config mailx` and see if `/usr/bin/mail.mailutils` is selected.
+
+- Edit crontab file as;
+    - `crontab -e` for user level
+    - Add the entry as;
+        - `0 0,6,12,18 * * *   /var/lib/haystack/pio/constituents/constituent.shell/src/main/resources/scripts/redeploy.sh >/dev/null 2>/dev/null`
+        - User `man cron` to check usage
+        - Manage schedules in conjunction with all other HMLPs and ensure that trains do not overlap
+    - Restart service to take effect
+        - `sudo systemctl restart cron`
+
+You are all set!
 
 ### Documentation usage
 
 Use this structure for other constituents
 
-##### 1 Recommendations
+##### 1 Skeleton
 
-###### 1.1 Event data
+###### 1.1 Overview
+- Recommend contexts to user
+    - `description`: given user id; recommends relevant contexts to patron (context ids)
+    - `known as`: constituent.recommend-contexts-to-user
+    - `takes`: user and context entities; view, interest, disinterest events
+    - `queries with` - user id
+    - `returns`: list of recommended context ids
+    - `answers`: at feeds page, populate **"Trending now"**
+    - `works for`: patron (consumer), publisher (creator)
+    - `example`: detail out an example
+
+###### 1.2 Event data
 - user *view* context events
 - user *interested* context events
 
-###### 1.2 Input query
+###### 1.3 Input query
 - user ID
 
-###### 1.3 Output predicted result
+###### 1.4 Output predicted result
 - a ranked list of recommended contextIDs
 
-###### 1.4 Training methodology
+###### 1.5 Training methodology
 - ALS
 
-###### 1.5 Example usage (capabilities)
+###### 1.6 Example usage (capabilities)
 - Person view this, bought that and hence might be interested in this item
 
 ### Versions
