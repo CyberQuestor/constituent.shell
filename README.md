@@ -95,9 +95,11 @@ It is important to complete at least one iteration of build, train and deploy cy
 - Build the prediction unit as,
     - `pio build --verbose`
 - Train the predictive model as (ensure events migration is complete),
-    - `pio train --executor-memory 2G --driver-memory 1G --total-executor-cores 2`
+    - `pio train --verbose -v engine.json -- --master spark://monad-dev-vm3:7077 --executor-memory 2G --driver-memory 1G --total-executor-cores 2`
 - Deploy the prediction unit as,
-    - `nohup pio deploy --port 17071 --ip 192.168.136.90 --executor-memory 2G --driver-memory 1G --total-executor-cores 2 > /var/log/haystack/pio/deploy/17071 &`
+    - `mkdir -p /var/log/haystack/pio/deploy/`
+    - `vi /var/log/haystack/pio/deploy/17071.log`; save and close
+    - `nohup pio deploy -v engine.json --ip 192.168.136.90 --port 17071 --event-server-port 7070 --feedback --accesskey <access_key> -- --master spark://monad-dev-vm3:7077 --executor-memory 2G --driver-memory 1G --total-executor-cores 2 > /var/log/haystack/pio/deploy/17071.log &`
     - Do not kill the deployed process. Subsequent train and deploy would take care of provisioning it again.
     - You can verify deployed HMLP by visiting `http://192.168.136.90:17071/` and querying at `http://192.168.136.90:17071/queries.json `
 - Edit `/etc/default/haystack` and add url keys to denote addition of HMLP.
