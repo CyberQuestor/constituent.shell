@@ -67,7 +67,7 @@ This section provides you details on how to provision HMLP on to HOLU. Refer to 
 - Edit `/etc/default/haystack` and add base paths for event server at both announcer and consumer nodes.
     - `holu.base=http://192.168.136.90:7070`
 
-##### Setup event pipeline
+#### Setup event pipeline
 The first element is to generate access tokens denoted as prediction pipeline units.
 
 - Execute the following to generate skeleton unit
@@ -76,7 +76,7 @@ The first element is to generate access tokens denoted as prediction pipeline un
         - It should be a 64-char string of the form `abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ12`
 - Record unit ID and access key. You will need this later.
 
-##### Prepare constituent
+#### Prepare constituent
 It is time to prepare constituent unit files that eventually manifests as a HML pipeline.
 
 - Retrieve engine files by cloning relevant git repository
@@ -89,7 +89,7 @@ It is time to prepare constituent unit files that eventually manifests as a HML 
         - `haystack.tachyon.events.dispatch.skeleton=<accesskey>`
 - Complete events import through migration and turning on concomitant consumer
 
-##### Initiate first time training and deploy
+#### Initiate first time training and deploy
 It is important to complete at least one iteration of build, train and deploy cycle prior to consumption.
 
 - Build the prediction unit as,
@@ -104,7 +104,7 @@ It is important to complete at least one iteration of build, train and deploy cy
 - For **announcer** nodes;
     - `haystack.tachyon.pipeline.access.skeleton=http://192.168.136.90:17071`
 
-##### Setup consecutive training and deploy
+#### Setup consecutive training and deploy
 Now that we have successfully provisioned this HMLP; let us set it up for a periodic train-deploy cycle. Note that events are always consumed at real-time but are not accounted for until the next train cycle builds the model.
 
 - Find the accompanying shell scripts of constituent and modify for consumption.
