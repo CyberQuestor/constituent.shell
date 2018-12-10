@@ -118,11 +118,13 @@ Now that we have successfully provisioned this HMLP; let us set it up for a peri
         - `FROM_EMAIL="info@haystack.one"` (emails are for internal notifications only)
         - `TARGET_EMAIL="masterhank05@gmail.com"` (set this to our support/ customer care email or create a notifications id)
         - `IP=192.168.136.90` - denotes HMLP for queries
-    - Rename `redeploy.sh.template` to `Constituent.shell_redeployment_(dev).sh`
-    - Edit `redeploy.sh` and set the following values;
+    - Rename `redeploy.sh.template` to `Constituent.shell_redeployment_dev.sh`
+    - Edit `Constituent.shell_redeployment_dev.sh` and set the following values;
         - `HOSTNAME=192.168.136.90` (for accessing event server)
         - `PORT=170071` - denotes HMLP port for queries
         - `ACCESSKEY=` - fill this with what was generated earlier
+        - `TRAIN_MASTER="spark://monad-dev-vm3:7077"`
+        - `DEPLOY_MASTER="spark://monad-dev-vm3:7077"`
     - Adjust spark driver and executor settings as required
     - Ensure `pio build` is run at least once before enabling this script.
 
@@ -131,7 +133,7 @@ Finally, setup crontab for executing these scripts. `mailutils` is used in this 
 - Edit crontab file as;
     - `crontab -e` for user level
     - Add the entry as;
-        - `0 0,6,12,18 * * * /var/lib/haystack/pio/constituents/constituent.shell/src/main/resources/scripts/redeploy.sh >/dev/null 2>/dev/null`
+        - `0 0,6,12,18 * * * /var/lib/haystack/pio/constituents/constituent.shell/src/main/resources/scripts/Constituent.shell_redeployment_dev.sh >/dev/null 2>/dev/null`
         - User `man cron` to check usage
         - Manage schedules in conjunction with all other HMLPs and ensure that trains do not overlap
     - Restart service to take effect
