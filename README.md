@@ -85,7 +85,7 @@ It is time to prepare constituent unit files that eventually manifests as a HML 
     - `cd constituent.shell`
 - Change `appName` at `engine.json` to `constituent.shell`
 - Edit `/etc/default/haystack` and add access keys to denote addition of HMLP.
-    - For consumer nodes;
+    - For **consumer** nodes;
         - `haystack.tachyon.events.dispatch.skeleton=<accesskey>`
 - Complete events import through migration and turning on concomitant consumer
 
@@ -101,7 +101,7 @@ It is important to complete at least one iteration of build, train and deploy cy
     - Do not kill the deployed process. Subsequent train and deploy would take care of provisioning it again.
     - You can verify deployed HMLP by visiting `http://192.168.136.90:17071/` and querying at `http://192.168.136.90:17071/queries.json `
 - Edit `/etc/default/haystack` and add url keys to denote addition of HMLP.
-- For announcer nodes;
+- For **announcer** nodes;
     - `haystack.tachyon.pipeline.access.skeleton=http://192.168.136.90:17071`
 
 ##### Setup consecutive training and deploy
