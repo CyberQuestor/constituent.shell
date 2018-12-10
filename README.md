@@ -116,7 +116,7 @@ Now that we have successfully provisioned this HMLP; let us set it up for a peri
         - `FROM_EMAIL="info@haystack.one"` (emails are for internal notifications only)
         - `TARGET_EMAIL="masterhank05@gmail.com"` (set this to our support/ customer care email or create a notifications id)
         - `IP=192.168.136.90` - denotes HMLP for queries
-    - Rename `redeploy.sh.template` to `redeploy.sh`
+    - Rename `redeploy.sh.template` to `Constituent.shell_redeployment_(dev).sh`
     - Edit `redeploy.sh` and set the following values;
         - `HOSTNAME=192.168.136.90` (for accessing event server)
         - `PORT=170071` - denotes HMLP port for queries
