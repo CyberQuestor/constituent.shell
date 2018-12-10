@@ -129,7 +129,7 @@ Finally, setup crontab for executing these scripts. `mailutils` is used in this 
 - Edit crontab file as;
     - `crontab -e` for user level
     - Add the entry as;
-        - `0 0,6,12,18 * * *   /var/lib/haystack/pio/constituents/constituent.shell/src/main/resources/scripts/redeploy.sh >/dev/null 2>/dev/null`
+        - `0 0,6,12,18 * * * /var/lib/haystack/pio/constituents/constituent.shell/src/main/resources/scripts/redeploy.sh >/dev/null 2>/dev/null`
         - User `man cron` to check usage
         - Manage schedules in conjunction with all other HMLPs and ensure that trains do not overlap
     - Restart service to take effect
