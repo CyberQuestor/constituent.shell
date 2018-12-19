@@ -29,7 +29,7 @@ HOSTNAME=localhost
 
 # A port other than the default 8000 is recommend since it can be shut down
 # upon the command "pio deploy" without the "--port" parameter by mistake
-PORT= 17071 # 8001 or something
+PORT=17071 # 8001 or something
 
 # Access key for feedback loop. It is a 64-char string of the form
 # abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ12
@@ -168,10 +168,10 @@ done
 KILLSD_COMMAND="kill $DEPLOYEDPORT"
 if [ -z "$DEPLOYEDPORT" ]
 then
-  echo -n "No stale PIDs found for port \$PORT"
+  echo -n "No stale PIDs found for port $PORT"
 else
   eval $($KILLSD_COMMAND)
-  echo -n "Stale PID found as \$DEPLOYEDPORT. Resources released."
+  echo -n "Stale PID found as $DEPLOYEDPORT. Resources released."
 fi
 
 cat $DEPLOY_LOG >> $LOG_FILE
