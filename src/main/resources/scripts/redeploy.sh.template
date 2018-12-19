@@ -29,7 +29,7 @@ HOSTNAME=localhost
 
 # A port other than the default 8000 is recommend since it can be shut down
 # upon the command "pio deploy" without the "--port" parameter by mistake
-PORT= # 8001
+PORT= 17071 # 8001 or something
 
 # Access key for feedback loop. It is a 64-char string of the form
 # abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ12
@@ -45,12 +45,12 @@ TRAIN_MASTER="spark://`hostname`:7077"
 DEPLOY_MASTER=
 
 # Bump these up as needed
-TRAIN_EXECUTOR_MEMORY=2G
-TRAIN_DRIVER_MEMORY=1G
+TRAIN_EXECUTOR_MEMORY=1G
+TRAIN_DRIVER_MEMORY=512M
 TRAIN_CORES=2
 #
-DEPLOY_EXECUTOR_MEMORY=2G
-DEPLOY_DRIVER_MEMORY=1G
+DEPLOY_EXECUTOR_MEMORY=1G
+DEPLOY_DRIVER_MEMORY=512M
 DEPLOY_CORES=2
 
 ###############################################################################
@@ -142,8 +142,12 @@ if [[ $TRAIN_RESULT -ne 0 ]]; then
 fi
 
 # Deploy
+# Get current running PID
+
 DEPLOY_LOG=`mktemp $LOG_DIR/tmp.XXXXXXXXXX`
 $($DEPLOY_COMMAND 1>$DEPLOY_LOG 2>&1) &
+
+# kill the previous deployment to free up resources
 
 # Check if the engine is up
 sleep 60
