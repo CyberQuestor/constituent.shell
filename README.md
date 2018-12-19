@@ -121,6 +121,7 @@ Now that we have successfully provisioned this HMLP; let us set it up for a peri
     - Edit `local.sh` and set the following values;
         - `PIO_HOME=/usr/local/pio`
         - `LOG_DIR=/var/log/haystack/pio/cumulative/17071` (ensure that the path exists)
+            - `mkdir -p /var/log/haystack/pio/cumulative/17071`
         - `FROM_EMAIL="info@haystack.one"` (emails are for internal notifications only)
         - `TARGET_EMAIL="masterhank05@gmail.com"` (set this to our support/ customer care email or create a notifications id)
         - `IP=192.168.136.90` - denotes HMLP for queries
@@ -145,7 +146,7 @@ Finally, setup crontab for executing these scripts. `mailutils` is used in this 
         - `0 0,6,12,18 * * * /var/lib/haystack/pio/constituents/constituent.shell/scripts/Constituent.shell_redeployment_dev.sh >/dev/null 2>/dev/null`
         - User `man cron` to check usage
         - Manage schedules in conjunction with all other HMLPs and ensure that trains do not overlap
-    - Reload to take effect
+    - Reload to take effect (optional)
         - `sudo service cron reload`
         - Restart if needed; `sudo systemctl restart cron`
 
