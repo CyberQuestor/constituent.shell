@@ -113,10 +113,11 @@ Now that we have successfully provisioned this HMLP; let us set it up for a peri
     - Go to constituent directory at;
         - `cd /var/lib/haystack/pio/constituents/constituent.shell/`
     - Time to copy these files to source scripts directory;
-        - `cd ../../../../`
         - `mkdir scripts`
-        - `cp src/main/resources/scripts/*.sh scripts/`
+        - `cp src/main/resources/scripts/*.sh.template scripts/`
+        - `cd scripts/`
     - Rename `local.sh.template` to `local.sh`
+        - `mv local.sh.template local.sh`
     - Edit `local.sh` and set the following values;
         - `PIO_HOME=/usr/local/pio`
         - `LOG_DIR=/var/log/haystack/pio/cumulative/17071` (ensure that the path exists)
@@ -124,9 +125,10 @@ Now that we have successfully provisioned this HMLP; let us set it up for a peri
         - `TARGET_EMAIL="masterhank05@gmail.com"` (set this to our support/ customer care email or create a notifications id)
         - `IP=192.168.136.90` - denotes HMLP for queries
     - Rename `redeploy.sh.template` to `Constituent.shell_redeployment_dev.sh`
+        - `mv redeploy.sh.template Constituent.shell_redeployment_dev.sh`
     - Edit `Constituent.shell_redeployment_dev.sh` and set the following values;
         - `HOSTNAME=192.168.136.90` (for accessing event server)
-        - `PORT=170071` - denotes HMLP port for queries
+        - `PORT=17071` - denotes HMLP port for queries
         - `ACCESSKEY=` - fill this with what was generated earlier
         - `TRAIN_MASTER="spark://monad-dev-vm3:7077"`
         - `DEPLOY_MASTER="spark://monad-dev-vm3:7077"`
