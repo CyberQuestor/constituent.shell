@@ -110,8 +110,8 @@ It is important to complete at least one iteration of build, train and deploy cy
 Now that we have successfully provisioned this HMLP; let us set it up for a periodic train-deploy cycle. Note that events are always consumed at real-time but are not accounted for until the next train cycle builds the model.
 
 - Find the accompanying shell scripts of constituent and modify for consumption.
-    - Got to constituent directory at;
-    		- `cd /var/lib/haystack/pio/constituents/constituent.shell/`
+    - Go to constituent directory at;
+        - `cd /var/lib/haystack/pio/constituents/constituent.shell/`
     - Time to copy these files to source scripts directory;
         - `cd ../../../../`
         - `mkdir scripts`
