@@ -111,10 +111,14 @@ Now that we have successfully provisioned this HMLP; let us set it up for a peri
 
 - Find the accompanying shell scripts of constituent and modify for consumption.
     - `cd /var/lib/haystack/pio/constituents/constituent.shell/src/main/resources/scripts/`
+    - Time to copy these files to source scripts directory;
+        - `cd ../../../../`
+        - `mkdir scripts`
+        - `cp src/main/resources/scripts/*.sh scripts/`
     - Rename `local.sh.template` to `local.sh`
     - Edit `local.sh` and set the following values;
         - `PIO_HOME=/usr/local/pio`
-        - `LOG_DIR=/var/log/haystack/pio/cumulative` (ensure that the path exists)
+        - `LOG_DIR=/var/log/haystack/pio/cumulative/17071` (ensure that the path exists)
         - `FROM_EMAIL="info@haystack.one"` (emails are for internal notifications only)
         - `TARGET_EMAIL="masterhank05@gmail.com"` (set this to our support/ customer care email or create a notifications id)
         - `IP=192.168.136.90` - denotes HMLP for queries
@@ -125,10 +129,6 @@ Now that we have successfully provisioned this HMLP; let us set it up for a peri
         - `ACCESSKEY=` - fill this with what was generated earlier
         - `TRAIN_MASTER="spark://monad-dev-vm3:7077"`
         - `DEPLOY_MASTER="spark://monad-dev-vm3:7077"`
-    - Time to copy these files to source scripts directory;
-        - `cd ../../../../`
-        - `mkdir scripts`
-        - `cp src/main/resources/scripts/*.sh scripts/`
     - Do not forget to make it executable;
         - `chmod +x Constituent.shell_redeployment_dev.sh `
     - Adjust spark driver and executor settings as required
