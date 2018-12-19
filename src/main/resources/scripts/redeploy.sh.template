@@ -143,6 +143,9 @@ fi
 
 # Deploy
 # Get current running PID
+#before deploying new pipeline, check for existing deployment on known port
+PIDBYPORT_COMMAND="lsof -t -i:$PORT"
+DEPLOYEDPORT=$($PIDBYPORT_COMMAND)
 
 DEPLOY_LOG=`mktemp $LOG_DIR/tmp.XXXXXXXXXX`
 $($DEPLOY_COMMAND 1>$DEPLOY_LOG 2>&1) &
@@ -160,6 +163,16 @@ while [[ $RETURN_VAL -ne 0 && $COUNTER -lt 20 ]]; do
   let RETURN_VAL=$?
   let COUNTER=COUNTER+1
 done
+
+# and then, after new deployment (confirmed) kill the previous one to release resources
+KILLSD_COMMAND="kill $DEPLOYEDPORT"
+if [ -z "$DEPLOYEDPORT" ]
+then
+  echo -n "No stale PIDs found for port \$PORT"
+else
+  eval $($KILLSD_COMMAND)
+  echo -n "Stale PID found as \$DEPLOYEDPORT. Resources released."
+fi
 
 cat $DEPLOY_LOG >> $LOG_FILE
 rm $DEPLOY_LOG
