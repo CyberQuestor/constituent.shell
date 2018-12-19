@@ -8,7 +8,7 @@
 # Settings common to all variants
 ##################################
 PIO_HOME=/usr/local/pio #/path/to/PredictionIO
-LOG_DIR=/var/log/haystack/pio/cumulative #/path/to/log_dir
+LOG_DIR=/var/log/haystack/pio/cumulative/17071 #/path/to/log_dir/with/chosen/port
 
 # Email for the log file/error message
 FROM_EMAIL="info@haystack.one"
