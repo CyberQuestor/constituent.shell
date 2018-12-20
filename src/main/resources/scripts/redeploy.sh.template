@@ -168,7 +168,7 @@ done
 KILLSD_COMMAND="kill $DEPLOYEDPORT"
 if [ -z "$DEPLOYEDPORT" ]
 then
-  echo -n "\nNo stale PIDs found for port $PORT\n"
+  printf "\nNo stale PIDs found for port $PORT\n"
 else
   $($KILLSD_COMMAND)
   printf "\nStale PID found as $DEPLOYEDPORT. Resources released.\n"
