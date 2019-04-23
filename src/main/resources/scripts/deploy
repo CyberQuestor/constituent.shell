@@ -99,7 +99,7 @@ PID=$($PIDBYPORT_COMMAND)
 $($DEPLOY_COMMAND 1>$LOG_FILE 2>&1) &
 
 # kill the previous deployment to free up resources
-printf "Awaiting signal from provisioned pipeline"
+printf "\nAwaiting signal from provisioned pipeline.\n"
 sleep 60			# wait for 60 seconds before doing anything else
 
 cd .. # change back to the location of the script
@@ -112,7 +112,7 @@ RESULT=$?
 # and then, after new deployment (confirmed) kill the previous one to release resources
 [ $RESULT -eq 0 ] && kill $PID > /dev/null 2>&1		# kill the previously running process if any
 
-printf "Pipeline provisioned"
+printf "\nPipeline provisioned. Watch logs for more details.\n"
 
 ######################
 # End of actual running
