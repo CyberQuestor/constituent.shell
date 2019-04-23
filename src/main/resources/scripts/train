@@ -92,7 +92,7 @@ printf "\nSubmit training.\n"
 
 cd ../pipeline
 
-$($TRAIN_COMMAND 1>$LOG_FILE 2>&1) &
+$($TRAIN_COMMAND 1>$LOG_FILE 2>&1)
 RESULT=$?
 
 cd .. # change back to the location of the script
