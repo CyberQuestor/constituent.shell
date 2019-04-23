@@ -97,7 +97,7 @@ RESULT=$?
 
 cd .. # change back to the location of the script
 
-printf "\nTraining initiated. Watch logs for status.\n"
+printf "\nTraining complete. Watch logs for details.\n"
 ######################
 # End of actual running
 ######################
