@@ -105,7 +105,7 @@ sleep 60			# wait for 60 seconds before doing anything else
 cd .. # change back to the location of the script
 
 STATUS_COMMAND="wget -O /dev/null --tries=10 --retry-connrefused --waitretry=60 --quiet http://$HOST:$PORT"
-#echo $STATUS_COMMAND
+
 $($STATUS_COMMAND) &			# run the check to see if the deployment is online
 RESULT=$?
 
