@@ -88,6 +88,8 @@ TRAIN_COMMAND="${PIO_HOME}/bin/pio train --verbose -v $ENGINE_JSON
 # Actually running it
 ######################
 
+printf "Initiated training"
+
 cd ../pipeline
 
 $($TRAIN_COMMAND 1>$LOG_FILE 2>&1) &
@@ -95,6 +97,7 @@ RESULT=$?
 
 cd .. # change back to the location of the script
 
+printf "Training complete"
 ######################
 # End of actual running
 ######################
