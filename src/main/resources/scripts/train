@@ -1,6 +1,9 @@
 #!/bin/bash
 #set -e
-#NAME=content-similarity
+#NAME=shell
+
+my_dir="$(dirname "$0")"
+cd $my_dir
 
 ###############################################################################
 # Configuration - read this section, modify only at conf/pipeline.conf
