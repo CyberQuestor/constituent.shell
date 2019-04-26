@@ -1,5 +1,10 @@
 ## Skeleton constituent
 
+### Example version
+This pipeline is now **0.0.2**
+
+_Target API version: **1.1.3.3**_
+
 ### Setup project
 This section helps you get started with setting up this constituent in eclipse
 
