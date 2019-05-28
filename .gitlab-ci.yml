@@ -1,0 +1,9 @@
+#dev:
+  #script:
+    # runs maven install and creates 'WAR' - web archive
+    #- sbt build
+    # provide download option for WAR
+  #artifacts:
+    #paths:
+      #- target/*.jar
+
